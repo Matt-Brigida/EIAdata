@@ -1,0 +1,8 @@
+importFrom(XML, xmlParse)
+importFrom(XML, xmlToDataFrame)
+importFrom(plyr, arrange)
+importFrom(xts, xts)
+importFrom(zoo, as.yearqtr)
+
+export(getCatEIA)
+export(getEIA)
