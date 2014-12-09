@@ -28,11 +28,11 @@ function (key, cat = 999999999)
         key, "&category_id=", cat, "&out=xml", sep = ""))
     doc <- xmlParse(file = url, isURL = TRUE)
     print("########Parent Category########")
-    tryCatch(print(xmlToDataFrame(nodes = getNodeSet(doc, "//category/parent_category_id"))), 
+    tryCatch(print(xmlToDataFrame(nodes = XML::getNodeSet(doc, "//category/parent_category_id"))), 
         warning = function(w) FALSE, error = function(w) FALSE)
     print("########Sub-Categories########")
-    print(xmlToDataFrame(nodes = getNodeSet(doc, "//childcategories/row")))
+    print(xmlToDataFrame(nodes = XML::getNodeSet(doc, "//childcategories/row")))
     print("########Series IDs########")
-    print(xmlToDataFrame(nodes = getNodeSet(doc, "///childseries/row")))
+    print(xmlToDataFrame(nodes = XML::getNodeSet(doc, "///childseries/row")))
   }
 }
