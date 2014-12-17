@@ -7,14 +7,15 @@ R wrapper for the US Energy Information Administration's (EIA's) API.
 }
 \description{
   This package allows the user to query categories, and import data, through the EIA's API. 
-  Resulting time series are objects of class xts.
+  Resulting time series are objects of class xts. The EIA API offeres
+  access to over a million unique time series.
 }
 \details{
 \tabular{ll}{
 Package: \tab EIAdata\cr
 Type: \tab Package\cr
-Version: \tab 0.0.1\cr
-Date: \tab 2014-08-04\cr
+Version: \tab 0.0.2\cr
+Date: \tab 2014-12-17\cr
 License: \tab GPL-2\cr
 }
 }
