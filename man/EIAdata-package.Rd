@@ -14,8 +14,8 @@ R wrapper for the US Energy Information Administration's (EIA's) API.
 \tabular{ll}{
 Package: \tab EIAdata\cr
 Type: \tab Package\cr
-Version: \tab 0.0.2\cr
-Date: \tab 2014-12-17\cr
+Version: \tab 0.0.3\cr
+Date: \tab 2015-03-09\cr
 License: \tab GPL-2\cr
 }
 }
@@ -30,7 +30,9 @@ http://www.eia.gov/beta/api/
 \keyword{ EIAdata }
 \examples{
 \donttest{
-# Be sure to load your EIA key.  EIA keys are free.  You can request one
+# \donttest is used here because the functions require a valid EIA API key.  While API keys are free, they are best kept private.
+
+# Be sure to load your EIA key.  You can request one
 # here: http://www.eia.gov/beta/api/register.cfm
 
 key <- "your_key"
