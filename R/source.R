@@ -27,7 +27,6 @@ getEIA <- function(ID, key){
   df <- xmlToDataFrame(nodes = XML::getNodeSet(doc, "//data/row"))
 
 ### Sort from oldest to newest ----
-###  df <- arrange(df, df$date)
   df <- df[ with(df, order(date)), ]
 
      
@@ -53,7 +52,6 @@ getEIA <- function(ID, key){
   df <- xmlToDataFrame(nodes = XML::getNodeSet(doc, "//data/row"))
 
 ### Sort from oldest to newest ----
-### df <- arrange(df, df$date)
   df <- df[ with(df, order(date)), ]
 
   date <- as.yearqtr(df$date)
@@ -78,7 +76,6 @@ getEIA <- function(ID, key){
   df <- xmlToDataFrame(nodes = XML::getNodeSet(doc, "//data/row"))
 
 ### Sort from oldest to newest ----
-###  df <- arrange(df, df$date)
   df <- df[ with(df, order(date)), ]
 
   date <- as.Date(paste(as.character(levels(df[,1]))[df[,1]], "01", sep=""), "%Y%m%d")
@@ -103,7 +100,6 @@ getEIA <- function(ID, key){
   df <- xmlToDataFrame(nodes = XML::getNodeSet(doc, "//data/row"))
 
 ### Sort from oldest to newest ----
-###  df <- arrange(df, df$date)
   df <- df[ with(df, order(date)), ]
   
   date <- as.Date(df$date, "%Y%m%d")

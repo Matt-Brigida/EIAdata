@@ -49,7 +49,7 @@ getCatEIA(key=key, cat=40827)
 # To download and return a time series object of class xts
 # for example ELEC.PLANT.GEN.13-WAT-ALL.Q
 
-getQEIA(ID = "ELEC.PLANT.GEN.13-WAT-ALL.Q", key = key)
+getEIA(ID = "ELEC.PLANT.GEN.13-WAT-ALL.Q", key = key)
 
 # The if the EIA series ID contains a "-", the function will replace
 # this with a ".".  So the call above will return a time series of

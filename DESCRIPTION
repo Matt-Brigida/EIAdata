@@ -6,5 +6,5 @@ Date: 2015-03-09
 Author: Matthew Brigida
 Maintainer: Matthew Brigida <matt@complete-markets.com>
 Description: An R wrapper to allow the user to query categories and Series IDs, and import data, from the EIA's API.
-Depends: R (>= 2.11.0), XML, plyr, xts, zoo
+Depends: R (>= 2.11.0), XML, xts, zoo
 License: GPL-2
