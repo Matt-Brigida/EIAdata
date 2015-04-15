@@ -8,7 +8,8 @@ R wrapper for the US Energy Information Administration's (EIA's) API.
 \description{
   This package allows the user to query categories, and import data, through the EIA's API. 
   Resulting time series are objects of class xts. The EIA API offeres
-  access to over a million unique time series.
+  access to over a million unique time series.  The package also
+  contains a function which returns the latest EIA Natural Gas Storage Report.
 }
 \details{
 \tabular{ll}{
@@ -29,6 +30,13 @@ http://www.eia.gov/beta/api/
 }
 \keyword{ EIAdata }
 \examples{
+# The function wngsr will return a list object containing (1) the time
+the report was run, (2) the weeks the report covers, and (3) the
+contents of the US EIA's Weekly Natural Gas Storage Report.  The
+function has no arguments, so simply run:
+
+wngsr()
+
 \donttest{
 # \donttest is used here because the functions require a valid EIA API key.
 # While API keys are free, they are best kept private.
