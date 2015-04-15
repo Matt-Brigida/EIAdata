@@ -59,6 +59,8 @@ wngsr <- function(){
                                      data4[,4]),
                                stringsAsFactors = F)
 
+    report.df <- data.frame(apply(report.df, 2, FUN = as.numeric))
+
     names(report.df) <- c(paste("This Week (", weeks[1,1], ")", sep = ""),
                           paste("Last Week (", weeks[1,2], ")", sep = ""),
                           "Net Change",
