@@ -121,20 +121,22 @@ getCatEIA <- function(cat=999999999, key){
          
          url <- paste("http://api.eia.gov/category?api_key=", key, "&category_id=", cat, "&out=xml", sep="" )
   )
-  doc <- FALSE
+  doc <- readLines(url, warn = FALSE)
   for( i in 1:3 ) {
-      doc <- tryCatch( xmlParse(file = url, isURL = TRUE), warning = function(w) FALSE, 
-                       error = function(w) FALSE)
+      doc <- tryCatch( xmlParse(doc, warning = function(w) FALSE, error = function(w) FALSE)) 
+                              #options = c(NOERROR, NOWARNING))   #
       if (class(doc) != "logical")
           break
       else
           if(i == 3)
-              stop(paste0("Attempted to parse category #", cat, 
+              stop(paste0("Attempted to retrieve data for category #", cat, 
                        " and failed ", i, " times. \n This is likely due to a communication error ", 
                        "with the EIA website."))
   }
   
-  Parent_Category <- tryCatch(xmlToDataFrame(nodes = XML::getNodeSet(doc, "//category/parent_category_id")), warning=function(w) FALSE, error=function(w) FALSE)
+  Parent_Category <- tryCatch(xmlToDataFrame(
+      nodes = XML::getNodeSet(doc, "//category/parent_category_id")), 
+      warning=function(w) FALSE, error=function(w) FALSE)
   
   Sub_Categories <- xmlToDataFrame(nodes = XML::getNodeSet(doc, "//childcategories/row"))
   
