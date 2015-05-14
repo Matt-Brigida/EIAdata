@@ -30,10 +30,10 @@ http://www.eia.gov/beta/api/
 }
 \keyword{ EIAdata }
 \examples{
-# The function wngsr will return a list object containing (1) the time
-# the report was run, (2) the weeks the report covers, and (3) the
-# contents of the US EIA's Weekly Natural Gas Storage Report.  The
-# function has no arguments, so simply run:
+# The function wngsr will return a list object containing the time
+# the report was run, and the contents of the US EIA's Weekly
+# Natural Gas Storage Report.  The function has no arguments,
+# so simply run:
 
 wngsr()
 

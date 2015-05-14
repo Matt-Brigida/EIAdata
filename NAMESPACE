@@ -2,7 +2,6 @@ importFrom(XML, xmlParse)
 importFrom(XML, xmlToDataFrame)
 importFrom(xts, xts)
 importFrom(zoo, as.yearqtr)
-importFrom(jsonlite, fromJSON)
 
 export(getCatEIA)
 export(getEIA)
