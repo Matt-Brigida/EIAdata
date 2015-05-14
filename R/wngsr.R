@@ -8,9 +8,14 @@ wngsr <- function(){
     
     names <- as.character(df[1,])[-1]
     df <- df[2:7,]
-    
-    names(df) <- c("region", names[1:4], "Year Ago Bcf", "% Change From Yr Ago", "5 Yr Avg Bcf", "% Change from 5 Yr Avg")
-    
+    df <- data.frame(df[,-1], row.names = df[,1])
+
+    ## remove comma in thousands and convert from character to numeric ----
+    df[] <- lapply(df, function(x) as.numeric(gsub("\\,", "", as.character(x))))
+
+    names(df) <- c(names[1:4], "Year Ago Bcf", "% Change YoY", "5 Yr Avg Bcf", "% Change from 5 Yr Avg")
+
+
 ### Get time the report was run ----
     time <- Sys.time()
 
