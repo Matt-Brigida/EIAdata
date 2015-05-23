@@ -1,6 +1,8 @@
 EIAdata
 =======
 
+[![](http://cranlogs.r-pkg.org/badges/tseries)](http://cran.rstudio.com/web/packages/tseries/index.html)
+
 R Wrapper for the Energy Information Administration (EIA) API.  
 
 This package provides programmatic access to the Energy Information Administration's (EIA) API (See http://www.eia.gov/beta/api/).  There are currently over a million unique time series available through the API.  To use the package you'll need a *free* API key from here: http://www.eia.gov/beta/api/register.cfm
