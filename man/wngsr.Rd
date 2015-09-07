@@ -10,8 +10,6 @@
 \usage{
 wngsr()
 }
-\arguments{
-}
 \author{Matthew Brigida
 }
 \examples{

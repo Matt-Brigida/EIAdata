@@ -7,7 +7,7 @@
   data category. The function will return Series IDs in a category if present.
 }
 \usage{
-getCatEIA(key, cat = 999999999)
+getCatEIA(cat = 999999999, key)
 }
 \arguments{
   \item{key}{Your EIA API key, in quotes.
@@ -20,7 +20,7 @@ getCatEIA(key, cat = 999999999)
 \examples{
 
 ## The function is currently defined as
-function(key, cat=999999999){
+function(cat=999999999, key){
 
   key <- unlist(strsplit(key, ";"))
 
