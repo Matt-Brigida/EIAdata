@@ -1,4 +1,4 @@
-### A function to pull the latest Weekly Natural Gas Storage Report from the EIA website.  A new report is issued every Thursday at 10:30am EST.  The natural gas market reacts very quickly to this report, and often with substantial volatility.  Good luck.
+### A function to pull the latest Weekly Natural Gas Storage Report from the EIA website.  A new report is issued every Thursday at 10:30am EST.  The natural gas market reacts very quickly to this report, and often with substantial volatility.  
 
 wngsr <- function(){
 
