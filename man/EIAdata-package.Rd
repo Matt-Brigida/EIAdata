@@ -15,8 +15,8 @@ R wrapper for the US Energy Information Administration's (EIA's) API.
 \tabular{ll}{
 Package: \tab EIAdata\cr
 Type: \tab Package\cr
-Version: \tab 0.0.3\cr
-Date: \tab 2015-03-09\cr
+Version: \tab 0.0.4\cr
+Date: \tab 2015-09-13\cr
 License: \tab GPL-2\cr
 }
 }
