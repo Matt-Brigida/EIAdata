@@ -145,7 +145,7 @@ getEIA <- function(ID, key){
 
   xts_data <- xts(values, order.by = date)
   ## removing time zone set in as.POSIXct
-  indexTZ(xts_data) <- ""
+  xts::indexTZ(xts_data) <- ""
   names(xts_data) <- sapply(strsplit(ID, "-"), paste, collapse = ".")
 
   temp <- assign(sapply(strsplit(ID, "-"), paste, collapse = "."), xts_data)

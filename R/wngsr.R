@@ -2,7 +2,7 @@
 
 wngsr <- function(){
 
-    df <- read.csv(file = "http://ir.eia.gov/ngs/wngsr.csv", header = F, skip = 6, stringsAsFactors = F, nrows = 7)
+    df <- utils::read.csv(file = "http://ir.eia.gov/ngs/wngsr.csv", header = F, skip = 6, stringsAsFactors = F, nrows = 7)
 
     df <- df[, colSums(is.na(df)) < nrow(df)]
     

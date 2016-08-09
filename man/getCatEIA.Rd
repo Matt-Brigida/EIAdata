@@ -25,7 +25,8 @@ getCatEIA <- function(cat=999999999, key){
   key <- unlist(strsplit(key, ";"))
 
   ifelse(cat==999999999,
-         url <- paste("http://api.eia.gov/category?api_key=", key, "&out=xml", sep="" ),
+         url <- paste("http://api.eia.gov/category?api_key=", 
+         key, "&out=xml", sep="" ),
          
          url <- paste("http://api.eia.gov/category?api_key=", key, 
                       "&category_id=", cat, "&out=xml", sep="" )
@@ -39,7 +40,8 @@ getCatEIA <- function(cat=999999999, key){
       else
           if(i == 3)
               stop(paste0("Attempted to retrieve data for category #", cat, 
-                       " and failed ", i, " times. \n This is likely due to a communication error ", 
+                       " and failed ", i, " times. \n This is likely due to a 
+                       communication error ", 
                        "with the EIA website."))
   }
   
