@@ -1,5 +1,10 @@
-### A function to pull the latest Weekly Natural Gas Storage Report from the EIA website.  A new report is issued every Thursday at 10:30am EST.  The natural gas market reacts very quickly to this report, and often with substantial volatility.  
-
+#' A function to return the latest EIA Weekly Natural Gas Storage Report.
+#' 
+#' The function wngsr will return a list object containing the time
+#' the report was run, and the contents of the US EIA's Weekly Natural Gas
+#' Storage Report.  The function has no arguments.
+#' 
+#' @export
 wngsr <- function(){
 
     df <- utils::read.csv(file = "http://ir.eia.gov/ngs/wngsr.csv", header = F, skip = 6, stringsAsFactors = F, nrows = 7)
