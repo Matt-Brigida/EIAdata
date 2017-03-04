@@ -3,6 +3,14 @@
       substr(x, nchar(x), nchar(x))
   }
 
+#' A function to download data from the Energy Information Administration's (EIA's) API.
+#'
+#' A function to download data from the EIA's API. Resulting time series are of class xts.
+#' 
+#' @param ID The EIA API Series ID for the data.
+#' @param key Your EIA API key
+#' 
+#' @export
 getEIA <- function(ID, key){
 
      switch(.last_char(ID),
@@ -152,6 +160,16 @@ getEIA <- function(ID, key){
   return(temp)
 }
 
+#' A function to view the sub and parent categories of an Energy 
+#' Information Administration (EIA) API data category.
+#' 
+#' A function to view the sub and parent categories of a EIA API
+#' data category. The function will return Series IDs in a category if present.
+#'
+#' @param key Your EIA API key, in quotes
+#' @param cat An EIA API data category number
+#' 
+#' @export
 getCatEIA <- function(cat=999999999, key){
     
   key <- unlist(strsplit(key, ";"))
