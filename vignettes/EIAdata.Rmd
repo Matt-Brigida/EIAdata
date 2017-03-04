@@ -1,0 +1,165 @@
+---
+title: "EIAdata"
+author: "Matthew Brigida"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{EIAdata}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+```{r}
+library(EIAdata)
+# for chaining
+library(dplyr)
+```
+
+This package allows the user to query categories, and import data, through the EIA's API. 
+Resulting time series are objects of class xts. The EIA API offeres
+access to over a million unique time series.  
+
+You need an API to access the data. You can request one
+[here](http://www.eia.gov/beta/api/register.cfm).  While API keys are free, 
+they are best kept private.
+
+
+```{r}
+key = "64BA063A53839DDA8B7D519ABCCEE094"
+```
+
+
+# Direct access:
+To see the top of the data category hierarchy
+
+```{r}
+getCatEIA(key = key)
+```
+
+To see the subcategories and data sets in a particular category (for example 40827).
+
+```{r}
+getCatEIA(key = key, cat = 40827)
+```
+
+To download and return a time series object of class xts
+for example `ELEC.PLANT.GEN.13-WAT-ALL.Q`
+
+```{r}
+getEIA(ID = "ELEC.PLANT.GEN.13-WAT-ALL.Q", key = key) %>% head
+```
+
+If the EIA series ID contains a "-", the function will replace
+this with a ".".  So the call above will return a time series of
+class `xts` named `ELEC.PLANT.GEN.13.WAT.ALL.Q`
+
+# Tree views
+
+Another way to navigate the API is by using tree views. Some terminology: each `tree` (category) might have
+associated branches (subcategories) or leaves (datasets). The `trunk` is the biggest category.
+
+```{r}
+my_trunk = trunk(key)
+```
+
+The `trunk` might have `branch`es:
+```{r}
+branches(my_trunk)
+```
+
+Accesing a `branch` that doesn't exist will cause error.
+```{r, error = TRUE}
+my_trunk %>% branch("false_branch")
+```
+
+It doesn't have any `leaves`:
+```{r}
+leaves(my_trunk)
+```
+
+Accessing a `leaf` will cause an error:
+```{r, error = TRUE}
+my_trunk %>% leaf("non_existent_leaf")
+```
+
+To access one of the branches, use `branch`:
+```{r}
+my_branch = branch(my_trunk, "Electricity")
+```
+
+Use `branch_ID` to get the ID number of the branch:
+```{r}
+branch_ID(my_branch)
+```
+
+You can navigate quickly through the `tree`:
+```{r}
+smaller_branch = 
+  trunk(key) %>%
+  branch("Electricity") %>%
+  branch("Net generation") %>%
+  branch("By sector") %>%
+  branch("Electric power (total)") %>%
+  branch("All fuels")
+```
+
+Or even all at once:
+
+```{r}
+smaller_branch = 
+  trunk(key) %>%
+  branch(c("Electricity", "Net generation", "By sector", "Electric power (total)", "All fuels"))
+```
+
+This smaller `branch` has no further branches:
+```{r}
+branches(smaller_branch)
+```
+
+Accessing a `branch` will cause an error:
+```{r, error = TRUE}
+smaller_branch %>% branch("non_existent_branch")
+```
+
+This branch has `leaves`, that is, datasets.
+```{r}
+leaves(smaller_branch) %>% head
+```
+
+To get extra info about a `leaf`, use `leaf_info`:
+```{r}
+smaller_branch %>% 
+  leaf_info("Net generation : all fuels : United States : electric power (total) : annual")
+```
+
+Trying to get info about a `leaf` that doesn't exist will cause an error:
+```{r, error = TRUE}
+smaller_branch %>% leaf_info("fake_leaf")
+```
+
+To get the data from a `leaf`, use `leaf`:
+```{r}
+smaller_branch %>% 
+  leaf("Net generation : all fuels : United States : electric power (total) : annual") %>%
+  head
+```
+
+Accessing a `leaf` that doesn't exist will cause an error:
+```{r, error = TRUE}
+smaller_branch %>% leaf("fake_branch")
+```
+
+# Natural gas data
+
+The package also contains a function which returns the latest EIA Natural Gas Storage Report.
+
+The function `wngsr` will return a list object containing the time
+the report was run, and the contents of the US EIA's Weekly
+Natural Gas Storage Report.  The function has no arguments,
+so simply run:
+
+```{r}
+wngsr()
+```
