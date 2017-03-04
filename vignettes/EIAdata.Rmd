@@ -27,7 +27,7 @@ they are best kept private.
 
 
 ```{r}
-key = "64BA063A53839DDA8B7D519ABCCEE094"
+key = "YOUR_API_KEY"
 ```
 
 
