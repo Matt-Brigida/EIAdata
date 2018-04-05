@@ -25,8 +25,11 @@ getEIA <- function(ID, key){
 
   doc <- xmlParse(file=url, isURL=TRUE)
 
-  df <- xmlToDataFrame(nodes = XML::getNodeSet(doc, "//data/row"))
-
+  df <- data.frame(
+    date = sapply(doc["//data/row/date"], xmlValue),
+    value = sapply(doc["//data/row/value"], xmlValue)
+  )
+  
 ### Sort from oldest to newest ----
   df <- df[ with(df, order(date)), ]
 
@@ -50,8 +53,11 @@ getEIA <- function(ID, key){
 
   doc <- xmlParse(file=url, isURL=TRUE)
 
-  df <- xmlToDataFrame(nodes = XML::getNodeSet(doc, "//data/row"))
-
+  df <- data.frame(
+    date = sapply(doc["//data/row/date"], xmlValue),
+    value = sapply(doc["//data/row/value"], xmlValue)
+  )
+  
 ### Sort from oldest to newest ----
   df <- df[ with(df, order(date)), ]
 
@@ -74,8 +80,11 @@ getEIA <- function(ID, key){
 
   doc <- xmlParse(file=url, isURL=TRUE)
 
-  df <- xmlToDataFrame(nodes = XML::getNodeSet(doc, "//data/row"))
-
+  df <- data.frame(
+    date = sapply(doc["//data/row/date"], xmlValue),
+    value = sapply(doc["//data/row/value"], xmlValue)
+  )
+  
 ### Sort from oldest to newest ----
   df <- df[ with(df, order(date)), ]
 
@@ -98,7 +107,11 @@ getEIA <- function(ID, key){
 
   doc <- xmlParse(file=url, isURL=TRUE)
 
-  df <- xmlToDataFrame(nodes = XML::getNodeSet(doc, "//data/row"))
+    df <- data.frame(
+      date = sapply(doc["//data/row/date"], xmlValue),
+      value = sapply(doc["//data/row/value"], xmlValue)
+    )
+
 
 ### Sort from oldest to newest ----
   df <- df[ with(df, order(date)), ]
@@ -119,8 +132,13 @@ getEIA <- function(ID, key){
   key <- unlist(strsplit(key, ";"))
   url <- paste("http://api.eia.gov/series?series_id=", ID, "&api_key=", key, "&out=xml", sep="" )
   doc <- xmlParse(file=url, isURL=TRUE)
-  df <- xmlToDataFrame(nodes = XML::getNodeSet(doc, "//data/row"))
+  
+  df <- data.frame(
+    date = sapply(doc["//data/row/date"], xmlValue),
+    value = sapply(doc["//data/row/value"], xmlValue)
+  )
 
+  
 ### Sort from oldest to newest ----
   df <- df[ with(df, order(date)), ]
  
