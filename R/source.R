@@ -26,8 +26,8 @@ getEIA <- function(ID, key){
   doc <- xmlParse(file=url, isURL=TRUE)
 
   df <- data.frame(
-    date = sapply(doc["//data/row/date"], xmlValue),
-    value = sapply(doc["//data/row/value"], xmlValue)
+    date = sapply(doc["//data/row/date"], XML::xmlValue),
+    value = sapply(doc["//data/row/value"], XML::xmlValue)
   )
   
 ### Sort from oldest to newest ----
@@ -54,8 +54,8 @@ getEIA <- function(ID, key){
   doc <- xmlParse(file=url, isURL=TRUE)
 
   df <- data.frame(
-    date = sapply(doc["//data/row/date"], xmlValue),
-    value = sapply(doc["//data/row/value"], xmlValue)
+    date = sapply(doc["//data/row/date"], XML::xmlValue),
+    value = sapply(doc["//data/row/value"], XML::xmlValue)
   )
   
 ### Sort from oldest to newest ----
@@ -81,8 +81,8 @@ getEIA <- function(ID, key){
   doc <- xmlParse(file=url, isURL=TRUE)
 
   df <- data.frame(
-    date = sapply(doc["//data/row/date"], xmlValue),
-    value = sapply(doc["//data/row/value"], xmlValue)
+    date = sapply(doc["//data/row/date"], XML::xmlValue),
+    value = sapply(doc["//data/row/value"], XML::xmlValue)
   )
   
 ### Sort from oldest to newest ----
@@ -108,8 +108,8 @@ getEIA <- function(ID, key){
   doc <- xmlParse(file=url, isURL=TRUE)
 
     df <- data.frame(
-      date = sapply(doc["//data/row/date"], xmlValue),
-      value = sapply(doc["//data/row/value"], xmlValue)
+      date = sapply(doc["//data/row/date"], XML::xmlValue),
+      value = sapply(doc["//data/row/value"], XML::xmlValue)
     )
 
 
@@ -134,8 +134,8 @@ getEIA <- function(ID, key){
   doc <- xmlParse(file=url, isURL=TRUE)
   
   df <- data.frame(
-    date = sapply(doc["//data/row/date"], xmlValue),
-    value = sapply(doc["//data/row/value"], xmlValue)
+    date = sapply(doc["//data/row/date"], XML::xmlValue),
+    value = sapply(doc["//data/row/value"], XML::xmlValue)
   )
 
   
