@@ -37,8 +37,8 @@ http://www.eia.gov/beta/api/
 
 wngsr()
 
-\donttest{
-# \donttest is used here because the functions require a valid EIA API key.
+\dontrun{
+# \dontrun is used here because the functions require a valid EIA API key.
 
 # While API keys are free, they are best kept private.
 
