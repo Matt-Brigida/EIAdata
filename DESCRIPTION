@@ -7,6 +7,6 @@ Author: Matthew Brigida and others (see GitHub)
 Maintainer: Matthew Brigida <mdbrigida at gmail.com>
 URL: https://github.com/Matt-Brigida/EIAdata
 BugReports: https://github.com/Matt-Brigida/EIAdata/issues
-Description: An R wrapper to allow the user to query categories and Series IDs, and import data, from the EIA's API.
+Description: An R wrapper to allow the user to query categories and Series IDs, and import data, from the EIA's API <https://www.eia.gov/opendata/>.
 Depends: R (>= 2.11.0), XML, xts, zoo
 License: GPL-2
