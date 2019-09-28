@@ -1,7 +1,7 @@
 
 .last_char <- function(x){
       substr(x, nchar(x), nchar(x))
-  }
+ }
 
 .last2char <- function(x){
       substr(x, nchar(x)-1, nchar(x))
