@@ -1,17 +1,22 @@
 
 .last_char <- function(x){
       substr(x, nchar(x), nchar(x))
-  }
+ }
+
+.last2char <- function(x){
+      substr(x, nchar(x)-1, nchar(x))
+}
 
 getEIA <- function(ID, key){
 
-     switch(.last_char(ID),
-            "A" = .getAnnEIA(ID, key=key),
-            "Q" = .getQEIA(ID, key=key),
-            "M" = .getMonEIA(ID, key=key),
-            "W" = .getWDEIA(ID, key=key),
-            "D" = .getWDEIA(ID, key=key),
-            "H" = .getHEIA(ID, key=key),
+     switch(.last2char(ID),
+            ".A" = .getAnnEIA(ID, key=key),
+            ".Q" = .getQEIA(ID, key=key),
+            ".M" = .getMonEIA(ID, key=key),
+            ".W" = .getWDEIA(ID, key=key),
+            ".D" = .getWDEIA(ID, key=key),
+            ".H" = .getHEIA(ID, key=key),
+            "HL" = .getHEIA(ID, key=key),
             print("ERROR: The last character of your ID is not one of the possible sampling frequencies (A, Q, M, W, D, or H)"))
  }
         
