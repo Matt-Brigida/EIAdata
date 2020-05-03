@@ -15,15 +15,15 @@ R wrapper for the US Energy Information Administration's (EIA's) API.
 \tabular{ll}{
 Package: \tab EIAdata\cr
 Type: \tab Package\cr
-Version: \tab 0.0.4\cr
-Date: \tab 2015-09-13\cr
+Version: \tab 0.0.6\cr
+Date: \tab 2020-05-02\cr
 License: \tab GPL-2\cr
 }
 }
 \author{
 Matthew Brigida
 
-Maintainer: Matthew Brigida <matt@complete-markets.com>
+Maintainer: Matthew Brigida <mdbrigida@gmail.com>
 }
 \references{
 http://www.eia.gov/beta/api/
