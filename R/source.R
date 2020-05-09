@@ -149,7 +149,14 @@ getEIA <- function(ID, key){
  
   ## will need to split the date to extract the hour ----
   ## the date/hour is in a unique format 
-  
+
+ ## looks like if the date ends in z it is UTC and otherwise in local time-------
+ ## Ex
+ ## UTC: 20200509T19Z
+ ## Local time: 20200509T13-07
+
+if(.last_char(df$date) == "Z") {
+
   date <- gsub("T", " ", df$date)
   date <- gsub("Z", ":00:00", date)
   
@@ -163,12 +170,19 @@ getEIA <- function(ID, key){
   hourMinuteSecond <- substr(date, 10, 17)
   
   ## but what time zone is the data??? Should be added to as.POSIXct below. However EIA may report data without specifying a unique time zone for all data (all data is appropriate local time) and therefore it is left to the user. This latter case is likely.  
-  date <- as.POSIXct(paste(yearMonthDay, hourMinuteSecond, sep = " "), "%Y%m%d %H:%M:%S")
+  date <- as.POSIXct(paste(yearMonthDay, hourMinuteSecond, sep = " "), tz = "UTC", format = "%Y-%m-%d %H:%M:%S")
+
+} else {
+
+
+}
+
+
   values <- as.numeric(levels(df[,-1]))[df[,-1]]
 
   xts_data <- xts(values, order.by = date)
   ## removing time zone set in as.POSIXct
-  xts::indexTZ(xts_data) <- ""
+  ## xts::indexTZ(xts_data) <- ""
   names(xts_data) <- sapply(strsplit(ID, "-"), paste, collapse = ".")
 
   temp <- assign(sapply(strsplit(ID, "-"), paste, collapse = "."), xts_data)
