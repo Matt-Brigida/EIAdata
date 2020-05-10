@@ -232,12 +232,17 @@ getEIA <- function(ID, key){
         return(temp)
         
     } else {
+
+      ## convert to GMT
         dateData <- data.frame(date=date, UTCoffset=UTCoffset)
         localDates <- as.POSIXct(date, format="%Y%m%d %H:%M:%S", tz="GMT")
         dateData$UTCTime <- localDates + as.numeric(UTCoffset)*3600
 
-        ## date UTC
-  values <- as.numeric(levels(df[,-1]))[df[,-1]]
+	## Cant return GMT because of warning -> error, so return local time
+	attr(dateData$UTCTime, 'tzone') <- ""
+
+	## date UTC
+	values <- as.numeric(levels(df[,-1]))[df[,-1]]
 
   xts_data <- xts(values, order.by = dateData$UTCTime)
 
@@ -246,7 +251,7 @@ getEIA <- function(ID, key){
         temp <- assign(sapply(strsplit(ID, "-"), paste, collapse = "."), xts_data)
         
         return(temp)
-        message("Could not determine local time zone so returning data in GMT.  Apply proper time zone conversion via attr([your series], 'tzone') <- 'US/Central' or similar.")
+        message("Could not determine local time zone so returning data in your local time zone.  Apply proper time zone conversion via attr([your series], 'tzone') <- 'US/Central' or similar.")
         }
 }
 
