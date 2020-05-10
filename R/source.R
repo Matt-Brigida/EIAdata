@@ -197,12 +197,30 @@ getEIA <- function(ID, key){
     
     date <- sapply(strsplit(as.character(df$date), "-"), `[`, 1)
     UTCoffset <- sapply(strsplit(as.character(df$date), "-"), `[`, 2)
+    uniqueUTCoffset <- unique(UTCoffset)
 
     date <- gsub("T", " ", date)
-    date <- gsub("Z", ":00:00", date)
-  
-## We can't know what the appropriate tz is below.  By leaving it blank it will default to the users tz.  Have it output a note telling the user to set the appropriate tz.
-  date <- as.POSIXct(date, tz = "", format = "%Y%m%d %H:%M:%S")
+    date <- paste0(date, ":00:00")
+
+    ## now determine tz
+
+    if("07" %in% uniqueUTCoffset & "08" %in% uniqueUTCoffset){
+        time_zone <- "US/Pacific"
+    } else if ("06" %in% uniqueUTCoffset & "07" %in% uniqueUTCoffset){
+        time_zone <- "US/Mountain"
+    } else if ("05" %in% uniqueUTCoffset & "06" %in% uniqueUTCoffset){
+        time_zone <- "US/Central"
+    } else if ("04" %in% uniqueUTCoffset & "05" %in% uniqueUTCoffset){
+        time_zone <- "US/Eastern"
+    } else {
+        time_zone <- ""
+    }
+
+## now if tz = "" unknown just convert to UTC
+
+    if (time_zone != ""){
+## applying right tz
+  date <- as.POSIXct(date, tz = time_zone, format = "%Y%m%d %H:%M:%S")
 
   values <- as.numeric(levels(df[,-1]))[df[,-1]]
 
@@ -211,7 +229,23 @@ getEIA <- function(ID, key){
   names(xts_data) <- sapply(strsplit(ID, "-"), paste, collapse = ".")
 
   temp <- assign(sapply(strsplit(ID, "-"), paste, collapse = "."), xts_data)
-  return(temp)
+        return(temp)
+        
+    } else {
+        dateData <- data.frame(date=date, UTCoffset=UTCoffset)
+        localDates <- as.POSIXct(date, format="%Y%m%d %H:%M:%S", tz="GMT")
+        dateData$UTCTime <- localDates + as.numeric(UTCoffset)*3600
+
+        ## date UTC
+  values <- as.numeric(levels(df[,-1]))[df[,-1]]
+
+  xts_data <- xts(values, order.by = dateData$UTCTime)
+
+  names(xts_data) <- sapply(strsplit(ID, "-"), paste, collapse = ".")
+
+  temp <- assign(sapply(strsplit(ID, "-"), paste, collapse = "."), xts_data)
+        return(temp)
+        }
 }
 
 
