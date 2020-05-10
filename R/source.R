@@ -243,8 +243,10 @@ getEIA <- function(ID, key){
 
   names(xts_data) <- sapply(strsplit(ID, "-"), paste, collapse = ".")
 
-  temp <- assign(sapply(strsplit(ID, "-"), paste, collapse = "."), xts_data)
+        temp <- assign(sapply(strsplit(ID, "-"), paste, collapse = "."), xts_data)
+        
         return(temp)
+        message("Could not determine local time zone so returning data in GMT.  Apply proper time zone conversion via attr([your series], 'tzone') <- 'US/Central' or similar.")
         }
 }
 
