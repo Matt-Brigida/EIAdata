@@ -15,8 +15,8 @@ getEIA <- function(ID, key){
             ".M" = .getMonEIA(ID, key=key),
             ".W" = .getWDEIA(ID, key=key),
             ".D" = .getWDEIA(ID, key=key),
-            ".H" = .getHEIA(ID, key=key),
-            "HL" = .getHEIA(ID, key=key),
+            ".H" = .getHEIA_UTC(ID, key=key),
+            "HL" = .getHEIA_L(ID, key=key),
             print("ERROR: The last character of your ID is not one of the possible sampling frequencies (A, Q, M, W, D, or H)"))
  }
         
@@ -131,7 +131,9 @@ getEIA <- function(ID, key){
   return(temp)
 }
 
-.getHEIA <- function(ID, key){
+
+### Hourly UTC tz--------
+.getHEIA_UTC <- function(ID, key){
 
   ID <- unlist(strsplit(ID, ";"))
   key <- unlist(strsplit(key, ";"))
@@ -147,48 +149,74 @@ getEIA <- function(ID, key){
 ### Sort from oldest to newest ----
   df <- df[ with(df, order(date)), ]
  
-  ## will need to split the date to extract the hour ----
-  ## the date/hour is in a unique format 
-
  ## looks like if the date ends in z it is UTC and otherwise in local time-------
- ## Ex
+ ## Here manage UTC
  ## UTC: 20200509T19Z
- ## Local time: 20200509T13-07
-
-if(.last_char(df$date) == "Z") {
 
   date <- gsub("T", " ", df$date)
   date <- gsub("Z", ":00:00", date)
-  
-  ## create year-month-day
-  tmpYear <- substr(date, 1, 4)
-  tmpMonth <- substr(date, 5, 6)
-  tmpDay <- substr(date, 7, 8)
-  yearMonthDay <- paste0(tmpYear, "-", tmpMonth, "-", tmpDay)
-  
-  ## create hour:minute:second
-  hourMinuteSecond <- substr(date, 10, 17)
-  
-  ## but what time zone is the data??? Should be added to as.POSIXct below. However EIA may report data without specifying a unique time zone for all data (all data is appropriate local time) and therefore it is left to the user. This latter case is likely.  
-  date <- as.POSIXct(paste(yearMonthDay, hourMinuteSecond, sep = " "), tz = "UTC", format = "%Y-%m-%d %H:%M:%S")
-
-} else {
-
-
-}
-
+    
+## TZ is UTC
+  date <- as.POSIXct(date, tz = "UTC", format = "%Y%m%d %H:%M:%S")
 
   values <- as.numeric(levels(df[,-1]))[df[,-1]]
 
   xts_data <- xts(values, order.by = date)
-  ## removing time zone set in as.POSIXct
-  ## xts::indexTZ(xts_data) <- ""
+
   names(xts_data) <- sapply(strsplit(ID, "-"), paste, collapse = ".")
 
   temp <- assign(sapply(strsplit(ID, "-"), paste, collapse = "."), xts_data)
   return(temp)
 }
 
+
+### hourly local tz---------
+.getHEIA_L <- function(ID, key){
+
+  ID <- unlist(strsplit(ID, ";"))
+  key <- unlist(strsplit(key, ";"))
+  url <- paste("http://api.eia.gov/series?series_id=", ID, "&api_key=", key, "&out=xml", sep="" )
+  doc <- xmlParse(file=url, isURL=TRUE)
+  
+  df <- data.frame(
+    date = sapply(doc["//data/row/date"], XML::xmlValue),
+    value = sapply(doc["//data/row/value"], XML::xmlValue)
+  )
+
+  
+### Sort from oldest to newest ----
+  df <- df[ with(df, order(date)), ]
+ 
+
+ ## looks like if the date ends in z it is UTC and otherwise in local time-------
+    ## Here manage local time: 20200509T13-07
+    ## what does the -07 mean???
+    ## I think it is the offset to UTC!
+    ## Plan:  Due to DST it looks like the offset is both 7 and 8 for PST, which means 6 and 7 for mountain, etc
+    ## switch statement to determine tz
+    
+    date <- sapply(strsplit(as.character(df$date), "-"), `[`, 1)
+    UTCoffset <- sapply(strsplit(as.character(df$date), "-"), `[`, 2)
+
+    date <- gsub("T", " ", date)
+    date <- gsub("Z", ":00:00", date)
+  
+## We can't know what the appropriate tz is below.  By leaving it blank it will default to the users tz.  Have it output a note telling the user to set the appropriate tz.
+  date <- as.POSIXct(date, tz = "", format = "%Y%m%d %H:%M:%S")
+
+  values <- as.numeric(levels(df[,-1]))[df[,-1]]
+
+  xts_data <- xts(values, order.by = date)
+
+  names(xts_data) <- sapply(strsplit(ID, "-"), paste, collapse = ".")
+
+  temp <- assign(sapply(strsplit(ID, "-"), paste, collapse = "."), xts_data)
+  return(temp)
+}
+
+
+
+### getCatEIA------
 getCatEIA <- function(cat=999999999, key){
     
   key <- unlist(strsplit(key, ";"))
