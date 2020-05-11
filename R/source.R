@@ -41,7 +41,6 @@ getEIA <- function(ID, key){
      
   date <- as.Date(paste(as.character(levels(df[,1]))[df[,1]], "-12-31", sep=""), "%Y-%m-%d")
   values <- as.numeric(as.character(df$value))
-  # values <- as.numeric(levels(df[,-1]))[df[,-1]]
 
   xts_data <- xts(values, order.by=date)
   names(xts_data) <- sapply(strsplit(ID, "-"), paste, collapse = ".")
@@ -69,7 +68,6 @@ getEIA <- function(ID, key){
 
   date <- as.yearqtr(df$date)
   values <- as.numeric(as.character(df$value))
-  # values <- as.numeric(levels(df[,-1]))[df[,-1]]
 
   xts_data <- xts(values, order.by=date)
   names(xts_data) <- sapply(strsplit(ID, "-"), paste, collapse = ".")
@@ -97,7 +95,6 @@ getEIA <- function(ID, key){
 
   date <- as.Date(paste(as.character(levels(df[,1]))[df[,1]], "01", sep=""), "%Y%m%d")
   values <- as.numeric(as.character(df$value))
-  # values <- as.numeric(levels(df[,-1]))[df[,-1]]
 
   xts_data <- xts(values, order.by=date)
   names(xts_data) <- sapply(strsplit(ID, "-"), paste, collapse = ".")
@@ -128,7 +125,6 @@ getEIA <- function(ID, key){
 
 ## this should work for both character or factor objects--------
   values <- as.numeric(as.character(df$value))
-  ##values <- as.numeric(levels(df[,-1]))[df[,-1]]
 
   xts_data <- xts(values, order.by=date)
   names(xts_data) <- sapply(strsplit(ID, "-"), paste, collapse = ".")
@@ -166,7 +162,6 @@ getEIA <- function(ID, key){
   date <- as.POSIXct(date, tz = "UTC", format = "%Y%m%d %H:%M:%S")
 
   values <- as.numeric(as.character(df$value))
-  ## values <- as.numeric(levels(df[,-1]))[df[,-1]]
 
   xts_data <- xts(values, order.by = date)
 
@@ -230,7 +225,6 @@ getEIA <- function(ID, key){
   date <- as.POSIXct(date, tz = time_zone, format = "%Y%m%d %H:%M:%S")
 
   values <- as.numeric(as.character(df$value))
-  ## values <- as.numeric(levels(df[,-1]))[df[,-1]]
 
   xts_data <- xts(values, order.by = date)
 
@@ -251,7 +245,6 @@ getEIA <- function(ID, key){
 
 	## date UTC
 	values <- as.numeric(as.character(df$value))
-	## values <- as.numeric(levels(df[,-1]))[df[,-1]]
 
   xts_data <- xts(values, order.by = dateData$UTCTime)
 
