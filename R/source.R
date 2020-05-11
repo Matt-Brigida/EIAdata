@@ -165,7 +165,8 @@ getEIA <- function(ID, key){
 ## TZ is UTC
   date <- as.POSIXct(date, tz = "UTC", format = "%Y%m%d %H:%M:%S")
 
-  values <- as.numeric(levels(df[,-1]))[df[,-1]]
+  values <- as.numeric(as.character(df$value))
+  ## values <- as.numeric(levels(df[,-1]))[df[,-1]]
 
   xts_data <- xts(values, order.by = date)
 
@@ -228,7 +229,8 @@ getEIA <- function(ID, key){
 ## applying right tz
   date <- as.POSIXct(date, tz = time_zone, format = "%Y%m%d %H:%M:%S")
 
-  values <- as.numeric(levels(df[,-1]))[df[,-1]]
+  values <- as.numeric(as.character(df$value))
+  ## values <- as.numeric(levels(df[,-1]))[df[,-1]]
 
   xts_data <- xts(values, order.by = date)
 
@@ -248,7 +250,8 @@ getEIA <- function(ID, key){
 	attr(dateData$UTCTime, 'tzone') <- ""
 
 	## date UTC
-	values <- as.numeric(levels(df[,-1]))[df[,-1]]
+	values <- as.numeric(as.character(df$value))
+	## values <- as.numeric(levels(df[,-1]))[df[,-1]]
 
   xts_data <- xts(values, order.by = dateData$UTCTime)
 
