@@ -40,7 +40,8 @@ getEIA <- function(ID, key){
 
      
   date <- as.Date(paste(as.character(levels(df[,1]))[df[,1]], "-12-31", sep=""), "%Y-%m-%d")
-  values <- as.numeric(levels(df[,-1]))[df[,-1]]
+  values <- as.numeric(as.character(df$value))
+  # values <- as.numeric(levels(df[,-1]))[df[,-1]]
 
   xts_data <- xts(values, order.by=date)
   names(xts_data) <- sapply(strsplit(ID, "-"), paste, collapse = ".")
@@ -67,7 +68,8 @@ getEIA <- function(ID, key){
   df <- df[ with(df, order(date)), ]
 
   date <- as.yearqtr(df$date)
-  values <- as.numeric(levels(df[,-1]))[df[,-1]]
+  values <- as.numeric(as.character(df$value))
+  # values <- as.numeric(levels(df[,-1]))[df[,-1]]
 
   xts_data <- xts(values, order.by=date)
   names(xts_data) <- sapply(strsplit(ID, "-"), paste, collapse = ".")
@@ -94,7 +96,8 @@ getEIA <- function(ID, key){
   df <- df[ with(df, order(date)), ]
 
   date <- as.Date(paste(as.character(levels(df[,1]))[df[,1]], "01", sep=""), "%Y%m%d")
-  values <- as.numeric(levels(df[,-1]))[df[,-1]]
+  values <- as.numeric(as.character(df$value))
+  # values <- as.numeric(levels(df[,-1]))[df[,-1]]
 
   xts_data <- xts(values, order.by=date)
   names(xts_data) <- sapply(strsplit(ID, "-"), paste, collapse = ".")
