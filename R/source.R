@@ -39,7 +39,8 @@ getEIA <- function(ID, key){
   df <- df[ with(df, order(date)), ]
 
      
-  date <- as.Date(paste(as.character(levels(df[,1]))[df[,1]], "-12-31", sep=""), "%Y-%m-%d")
+  date <- as.Date(paste(as.character(df$date), "-12-31", sep=""), "%Y-%m-%d")
+  ## date <- as.Date(paste(as.character(levels(df[,1]))[df[,1]], "-12-31", sep=""), "%Y-%m-%d")
   values <- as.numeric(as.character(df$value))
 
   xts_data <- xts(values, order.by=date)
@@ -93,7 +94,8 @@ getEIA <- function(ID, key){
 ### Sort from oldest to newest ----
   df <- df[ with(df, order(date)), ]
 
-  date <- as.Date(paste(as.character(levels(df[,1]))[df[,1]], "01", sep=""), "%Y%m%d")
+  date <- as.Date(paste(as.character(df$date), "01", sep=""), "%Y%m%d")
+  ## date <- as.Date(paste(as.character(levels(df[,1]))[df[,1]], "01", sep=""), "%Y%m%d")
   values <- as.numeric(as.character(df$value))
 
   xts_data <- xts(values, order.by=date)
