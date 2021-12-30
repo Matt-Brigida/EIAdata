@@ -2,7 +2,15 @@
 
 wngsr <- function(){
 
-    df <- utils::read.csv(file = "http://ir.eia.gov/ngs/wngsr.csv", header = F, skip = 6, stringsAsFactors = F, nrows = 9)
+    df <- tryCatch(utils::read.csv(file = "http://ir.eia.gov/ngs/wngsr.csv", header = F, skip = 6, stringsAsFactors = F, nrows = 9),
+        warn = F,
+        error = function(e) NULL
+        )
+
+    if (is.null(df)) {
+        print("Could not open the URL.  You may want to check your internet connection.")
+        break
+    }
 
     df <- df[, colSums(is.na(df)) < nrow(df)]
     
