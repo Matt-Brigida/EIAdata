@@ -8,8 +8,7 @@ wngsr <- function(){
         )
 
     if (is.null(df)) {
-        print("Could not open the URL.  You may want to check your internet connection.")
-        break
+        stop("Could not open the URL.  You may want to check your internet connection.")
     }
 
     df <- df[, colSums(is.na(df)) < nrow(df)]
