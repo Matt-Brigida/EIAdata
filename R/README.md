@@ -1,0 +1,1 @@
+Removing wngsr from master.  If we want to keep it we can do the work in this branch. We need to have the wngsr return a nice error message if it fails (due to no internet connection). See ripley's email.  
