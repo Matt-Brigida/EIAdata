@@ -5,4 +5,3 @@ importFrom(zoo, as.yearqtr)
 
 export(getCatEIA)
 export(getEIA)
-export(wngsr)

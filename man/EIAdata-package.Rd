@@ -15,8 +15,8 @@ R wrapper for the US Energy Information Administration's (EIA's) API.
 \tabular{ll}{
 Package: \tab EIAdata\cr
 Type: \tab Package\cr
-Version: \tab 0.1.1\cr
-Date: \tab 2020-05-13\cr
+Version: \tab 0.1.2\cr
+Date: \tab 2022-01-10\cr
 License: \tab GPL-2\cr
 }
 }
@@ -30,13 +30,6 @@ http://www.eia.gov/beta/api/
 }
 \keyword{ EIAdata }
 \examples{
-# The function wngsr will return a list object containing the time
-# the report was run, and the contents of the US EIA's Weekly
-# Natural Gas Storage Report.  The function has no arguments,
-# so simply run:
-
-wngsr()
-
 \dontrun{
 # \dontrun is used here because the functions require a valid EIA API key.
 
