@@ -281,9 +281,9 @@ getCatEIA <- function(cat=999999999, key){
   key <- unlist(strsplit(key, ";"))
 
   ifelse(cat==999999999,
-         url <- paste("http://api.eia.gov/category?api_key=", key, "&out=xml", sep="" ),
+         url <- paste("https://api.eia.gov/category/?api_key=", key, "&out=xml", sep="" ),
          
-         url <- paste("http://api.eia.gov/category?api_key=", key, 
+         url <- paste("https://api.eia.gov/category/?api_key=", key, 
                       "&category_id=", cat, "&out=xml", sep="" )
   )
   for( i in 1:3 ) {
