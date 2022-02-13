@@ -1,8 +1,8 @@
 Package: EIAdata
 Type: Package
 Title: R Wrapper for the Energy Information Administration (EIA) API
-Version: 0.1.2
-Date: 2022-01-10
+Version: 0.1.3
+Date: 2022-02-13
 Author: Matthew Brigida and others (see GitHub)
 Maintainer: Matthew Brigida <mdbrigida@gmail.com>
 URL: https://github.com/Matt-Brigida/EIAdata
