@@ -38,21 +38,3 @@ dev_mode(on = F)
 ## and you are again using the CRAN version
 ```
 
-
-### Donations
-
-If you like the package and are feeling charitable, you can donate to the following addresses:
-
-#### Algorand:
-
-> PBCXRO7GA3TEO5OWTUBEKBMQJB5KNZWQOPUSHKSXLFJTWQEM5NJTBYIHO4
-
-#### Bitcoin:
-
-> 3R2G96q3qc1MDEYEwcMsbkfcKJEfEDyia7
-
-#### Ethereum:
-
-> 0xC3Ef6A0C05861178bB86129f66f578De40DD2728
-
-
