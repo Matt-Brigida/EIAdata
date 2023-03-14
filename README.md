@@ -1,6 +1,8 @@
 EIAdata
 =======
 
+**The EIA has changed the API and EIAdata is temporarily broken.**
+
 Download count from RStudio's CRAN mirror (via cranlogs.r-pkg.org):
 
 [![](http://cranlogs.r-pkg.org/badges/EIAdata)](http://cran.rstudio.com/web/packages/EIAdata/index.html)
