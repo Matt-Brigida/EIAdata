@@ -26,7 +26,7 @@ getEIA <- function(ID, key){
   ID <- unlist(strsplit(ID, ";"))
   key <- unlist(strsplit(key, ";"))
 
-  url <- paste("https://api.eia.gov/series/?series_id=", ID, "&api_key=", key, "&out=xml", sep="" )
+  url <- paste("https://api.eia.gov/v2/seriesid/", ID, "?api_key=", key, "&out=xml", sep="")
 
   doc <- httr::GET(url)
 
