@@ -55,8 +55,8 @@ getEIA <- function(ID, key){
   date <- fromJSON(content(doc, "text"))$response$data$period
   values <- as.numeric(fromJSON(content(doc, "text"))$response$data$value)
 
-  date <- as.yearqtr(df$date)
-  values <- as.numeric(as.character(df$value))
+  date <- as.yearqtr(date, "%Y-%Q") # <--- need to get the new quarter format right, it is "YYYY-Q1"
+  values <- as.numeric(as.character(values))
 
   xts_data <- xts(values, order.by=date)
   names(xts_data) <- sapply(strsplit(ID, "-"), paste, collapse = ".")
@@ -65,28 +65,21 @@ getEIA <- function(ID, key){
   return(temp)
 }
 
+## need to verify monthly
 .getMonEIA <- function(ID, key){
 
   ID <- unlist(strsplit(ID, ";"))
   key <- unlist(strsplit(key, ";"))
 
-  url <- paste("https://api.eia.gov/series/?series_id=", ID, "&api_key=", key, "&out=xml", sep="" )
+  url <- paste("https://api.eia.gov/v2/seriesid/", ID, "?api_key=", key, "&out=xml", sep="")
 
   doc <- httr::GET(url)
 
-  doc <- xmlParse(doc)
+  date <- fromJSON(content(doc, "text"))$response$data$period
+  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$value)
 
-  df <- data.frame(
-    date = sapply(doc["//data/row/date"], XML::xmlValue),
-    value = sapply(doc["//data/row/value"], XML::xmlValue)
-  )
-  
-### Sort from oldest to newest ----
-  df <- df[ with(df, order(date)), ]
-
-  date <- as.Date(paste(as.character(df$date), "01", sep=""), "%Y%m%d")
-  ## date <- as.Date(paste(as.character(levels(df[,1]))[df[,1]], "01", sep=""), "%Y%m%d")
-  values <- as.numeric(as.character(df$value))
+  date <- as.Date(paste(as.character(date), "01", sep=""), "%Y-%m-%d")
+  values <- as.numeric(as.character(values))
 
   xts_data <- xts(values, order.by=date)
   names(xts_data) <- sapply(strsplit(ID, "-"), paste, collapse = ".")
@@ -126,32 +119,25 @@ getEIA <- function(ID, key){
 
   ID <- unlist(strsplit(ID, ";"))
   key <- unlist(strsplit(key, ";"))
-  url <- paste("https://api.eia.gov/series/?series_id=", ID, "&api_key=", key, "&out=xml", sep="" )
+
+  url <- paste("https://api.eia.gov/v2/seriesid/", ID, "?api_key=", key, "&out=xml", sep="")
 
   doc <- httr::GET(url)
 
-  doc <- xmlParse(doc)    
-  
-  df <- data.frame(
-    date = sapply(doc["//data/row/date"], XML::xmlValue),
-    value = sapply(doc["//data/row/value"], XML::xmlValue)
-  )
-
-  
-### Sort from oldest to newest ----
-  df <- df[ with(df, order(date)), ]
+  date <- fromJSON(content(doc, "text"))$response$data$period
+  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$value)  
  
  ## looks like if the date ends in z it is UTC and otherwise in local time-------
  ## Here manage UTC
  ## UTC: 20200509T19Z
 
-  date <- gsub("T", " ", df$date)
+  date <- gsub("T", " ", date)
   date <- gsub("Z", ":00:00", date)
     
 ## TZ is UTC
   date <- as.POSIXct(date, tz = "UTC", format = "%Y%m%d %H:%M:%S")
 
-  values <- as.numeric(as.character(df$value))
+  values <- as.numeric(as.character(values))
 
   xts_data <- xts(values, order.by = date)
 
@@ -167,21 +153,13 @@ getEIA <- function(ID, key){
 
   ID <- unlist(strsplit(ID, ";"))
   key <- unlist(strsplit(key, ";"))
-  url <- paste("https://api.eia.gov/series/?series_id=", ID, "&api_key=", key, "&out=xml", sep="" )
+
+  url <- paste("https://api.eia.gov/v2/seriesid/", ID, "?api_key=", key, "&out=xml", sep="")
 
   doc <- httr::GET(url)
 
-  doc <- xmlParse(doc)    
-    
-  df <- data.frame(
-    date = sapply(doc["//data/row/date"], XML::xmlValue),
-    value = sapply(doc["//data/row/value"], XML::xmlValue)
-  )
-
-  
-### Sort from oldest to newest ----
-  df <- df[ with(df, order(date)), ]
- 
+  date <- fromJSON(content(doc, "text"))$response$data$period
+  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$value)  
 
  ## looks like if the date ends in z it is UTC and otherwise in local time-------
     ## Here manage local time: 20200509T13-07
@@ -190,8 +168,9 @@ getEIA <- function(ID, key){
     ## Plan:  Due to DST it looks like the offset is both 7 and 8 for PST, which means 6 and 7 for mountain, etc
     ## switch statement to determine tz
     
-    date <- sapply(strsplit(as.character(df$date), "-"), `[`, 1)
-    UTCoffset <- sapply(strsplit(as.character(df$date), "-"), `[`, 2)
+    date1 <- sapply(strsplit(as.character(date), "-"), `[`, 1)
+    UTCoffset <- sapply(strsplit(as.character(date), "-"), `[`, 2)
+    date <- date1
     uniqueUTCoffset <- unique(UTCoffset)
 
     date <- gsub("T", " ", date)
@@ -217,7 +196,7 @@ getEIA <- function(ID, key){
 ## applying right tz
   date <- as.POSIXct(date, tz = time_zone, format = "%Y%m%d %H:%M:%S")
 
-  values <- as.numeric(as.character(df$value))
+  values <- as.numeric(as.character(values))
 
   xts_data <- xts(values, order.by = date)
 
@@ -237,7 +216,7 @@ getEIA <- function(ID, key){
 	attr(dateData$UTCTime, 'tzone') <- ""
 
 	## date UTC
-	values <- as.numeric(as.character(df$value))
+	values <- as.numeric(as.character(values))
 
   xts_data <- xts(values, order.by = dateData$UTCTime)
 
@@ -248,44 +227,4 @@ getEIA <- function(ID, key){
         return(temp)
         message("Could not determine local time zone so returning data in your local time zone.  Apply proper time zone conversion via attr([your series], 'tzone') <- 'US/Central' or similar.")
         }
-}
-
-
-
-### getCatEIA------
-getCatEIA <- function(cat=999999999, key){
-    
-  key <- unlist(strsplit(key, ";"))
-
-  ifelse(cat==999999999,
-         url <- paste("https://api.eia.gov/category/?api_key=", key, "&out=xml", sep="" ),
-         
-         url <- paste("https://api.eia.gov/category/?api_key=", key, 
-                      "&category_id=", cat, "&out=xml", sep="" )
-  )
-  for( i in 1:3 ) {
-      doc <- tryCatch(readLines(url, warn = FALSE), error = function(w) FALSE)
-      if (class(doc) != "logical"){
-          doc <- xmlParse(doc)
-          break
-      }
-      else
-          if(i == 3)
-              stop(paste0("Attempted to retrieve data for category #", cat, 
-                       " and failed ", i, " times. \n This is likely due to a communication error ", 
-                       "with the EIA website."))
-  }
-  
-  Parent_Category <- tryCatch(xmlToDataFrame(
-      nodes = XML::getNodeSet(doc, "//category/parent_category_id")), 
-      warning=function(w) FALSE, error=function(w) FALSE)
-  
-  Sub_Categories <- xmlToDataFrame(nodes = XML::getNodeSet(doc, "//childcategories/row"))
-  
-  Series_IDs <- xmlToDataFrame(nodes = XML::getNodeSet(doc, "///childseries/row"))
-
-  Categories <- list(Parent_Category, Sub_Categories, Series_IDs)
-  names(Categories) <- c("Parent_Category", "Sub_Categories", "Series_IDs")
-
-  return(Categories)
 }
