@@ -30,20 +30,10 @@ getEIA <- function(ID, key){
 
   doc <- httr::GET(url)
 
-  doc <- xmlParse(doc)
+  date <- fromJSON(content(doc, "text"))$response$data$period
+  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$value)
 
-  df <- data.frame(
-    date = sapply(doc["//data/row/date"], XML::xmlValue),
-    value = sapply(doc["//data/row/value"], XML::xmlValue)
-  )
-  
-### Sort from oldest to newest ----
-  df <- df[ with(df, order(date)), ]
-
-     
-  date <- as.Date(paste(as.character(df$date), "-12-31", sep=""), "%Y-%m-%d")
-  ## date <- as.Date(paste(as.character(levels(df[,1]))[df[,1]], "-12-31", sep=""), "%Y-%m-%d")
-  values <- as.numeric(as.character(df$value))
+  date <- as.Date(paste(as.character(date), "-12-31", sep=""), "%Y-%m-%d")
 
   xts_data <- xts(values, order.by=date)
   names(xts_data) <- sapply(strsplit(ID, "-"), paste, collapse = ".")
