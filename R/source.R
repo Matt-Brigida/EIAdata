@@ -54,8 +54,9 @@ getEIA <- function(ID, key){
 
   date <- fromJSON(content(doc, "text"))$response$data$period
   values <- as.numeric(fromJSON(content(doc, "text"))$response$data$value)
-
-  date <- as.yearqtr(date, "%Y-%Q") # <--- need to get the new quarter format right, it is "YYYY-Q1"
+  
+  date <- gsub("-", "", date)
+  date <- as.yearqtr(date) # <--- need to get the new quarter format right, it is "YYYY-Q1"
   values <- as.numeric(as.character(values))
 
   xts_data <- xts(values, order.by=date)
