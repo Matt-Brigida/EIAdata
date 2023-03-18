@@ -20,7 +20,7 @@ getEIA <- function(ID, key){
             print("ERROR: The last character of your ID is not one of the possible sampling frequencies (A, Q, M, W, D, or H)"))
  }
         
-
+## annual working
 .getAnnEIA <- function(ID, key){
 
   ID <- unlist(strsplit(ID, ";"))
@@ -42,24 +42,18 @@ getEIA <- function(ID, key){
   return(temp)
 }
 
+## need quarterly series ID to test
 .getQEIA <- function(ID, key){
 
   ID <- unlist(strsplit(ID, ";"))
   key <- unlist(strsplit(key, ";"))
 
-  url <- paste("https://api.eia.gov/series/?series_id=", ID, "&api_key=", key, "&out=xml", sep="" )
+  url <- paste("https://api.eia.gov/v2/seriesid/", ID, "?api_key=", key, "&out=xml", sep="")
 
   doc <- httr::GET(url)
 
-  doc <- xmlParse(doc)
-
-  df <- data.frame(
-    date = sapply(doc["//data/row/date"], XML::xmlValue),
-    value = sapply(doc["//data/row/value"], XML::xmlValue)
-  )
-  
-### Sort from oldest to newest ----
-  df <- df[ with(df, order(date)), ]
+  date <- fromJSON(content(doc, "text"))$response$data$period
+  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$value)
 
   date <- as.yearqtr(df$date)
   values <- as.numeric(as.character(df$value))
@@ -101,30 +95,23 @@ getEIA <- function(ID, key){
   return(temp)
 }
 
+## weekly working
 .getWDEIA <- function(ID, key){
 
   ID <- unlist(strsplit(ID, ";"))
   key <- unlist(strsplit(key, ";"))
 
-  url <- paste("https://api.eia.gov/series/?series_id=", ID, "&api_key=", key, "&out=xml", sep="" )
+  url <- paste("https://api.eia.gov/v2/seriesid/", ID, "?api_key=", key, "&out=xml", sep="")
 
   doc <- httr::GET(url)
 
-  doc <- xmlParse(doc)
+  date <- fromJSON(content(doc, "text"))$response$data$period
+  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$value)
 
-    df <- data.frame(
-      date = sapply(doc["//data/row/date"], XML::xmlValue),
-      value = sapply(doc["//data/row/value"], XML::xmlValue)
-    )
-
-
-### Sort from oldest to newest ----
-  df <- df[ with(df, order(date)), ]
-  
-  date <- as.Date(df$date, "%Y%m%d")
+  date <- as.Date(date, "%Y- %m-%d")
 
 ## this should work for both character or factor objects--------
-  values <- as.numeric(as.character(df$value))
+  values <- as.numeric(as.character(values))
 
   xts_data <- xts(values, order.by=date)
   names(xts_data) <- sapply(strsplit(ID, "-"), paste, collapse = ".")
