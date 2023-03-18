@@ -1,11 +1,7 @@
 EIAdata
 =======
 
-**The EIA has changed the API and EIAdata is temporarily broken.**
-
-Download count from RStudio's CRAN mirror (via cranlogs.r-pkg.org):
-
-[![](http://cranlogs.r-pkg.org/badges/EIAdata)](http://cran.rstudio.com/web/packages/EIAdata/index.html)
+**The EIA has done a major upgrade to their API (v2), and this package is permanently broken and archived.  A big thanks to all who contributed over the years.**
 
 R Wrapper for the Energy Information Administration (EIA) API.  
 
