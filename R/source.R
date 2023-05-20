@@ -91,7 +91,7 @@ getEIA <- function(ID, key){
   values <- as.numeric(fromJSON(content(doc, "text"))$response$data$price)
   }
 
-  date <- as.Date(paste(as.character(date), "01", sep=""), "%Y-%m-%d")
+  date <- as.Date(paste(as.character(date), "01", sep="-"), "%Y-%m-%d")
   values <- as.numeric(as.character(values))
 
   xts_data <- xts(values, order.by=date)
