@@ -32,6 +32,10 @@ getEIA <- function(ID, key){
 
   date <- fromJSON(content(doc, "text"))$response$data$period
   values <- as.numeric(fromJSON(content(doc, "text"))$response$data$value)
+  if(length(values) == 0)
+  {
+  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$price)
+  }
 
   date <- as.Date(paste(as.character(date), "-12-31", sep=""), "%Y-%m-%d")
 
@@ -54,6 +58,10 @@ getEIA <- function(ID, key){
 
   date <- fromJSON(content(doc, "text"))$response$data$period
   values <- as.numeric(fromJSON(content(doc, "text"))$response$data$value)
+  if(length(values) == 0)
+  {
+  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$price)
+  }
   
   date <- gsub("-", "", date)
   date <- as.yearqtr(date) # <--- need to get the new quarter format right, it is "YYYY-Q1"
@@ -78,6 +86,10 @@ getEIA <- function(ID, key){
 
   date <- fromJSON(content(doc, "text"))$response$data$period
   values <- as.numeric(fromJSON(content(doc, "text"))$response$data$value)
+  if(length(values) == 0)
+  {
+  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$price)
+  }
 
   date <- as.Date(paste(as.character(date), "01", sep=""), "%Y-%m-%d")
   values <- as.numeric(as.character(values))
@@ -101,6 +113,10 @@ getEIA <- function(ID, key){
 
   date <- fromJSON(content(doc, "text"))$response$data$period
   values <- as.numeric(fromJSON(content(doc, "text"))$response$data$value)
+  if(length(values) == 0)
+  {
+  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$price)
+  }
 
   date <- as.Date(date, "%Y- %m-%d")
 
@@ -127,6 +143,10 @@ getEIA <- function(ID, key){
 
   date <- fromJSON(content(doc, "text"))$response$data$period
   values <- as.numeric(fromJSON(content(doc, "text"))$response$data$value)  
+  if(length(values) == 0)
+  {
+  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$price)
+  }
  
  ## looks like if the date ends in z it is UTC and otherwise in local time-------
  ## Here manage UTC
@@ -161,6 +181,10 @@ getEIA <- function(ID, key){
 
   date <- fromJSON(content(doc, "text"))$response$data$period
   values <- as.numeric(fromJSON(content(doc, "text"))$response$data$value)  
+  if(length(values) == 0)
+  {
+  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$price)
+  }
 
  ## looks like if the date ends in z it is UTC and otherwise in local time-------
     ## Here manage local time: 20200509T13-07
