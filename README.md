@@ -1,7 +1,7 @@
 EIAdata
 =======
 
-**The EIA has done a major upgrade to their API (v2), and this package is permanently broken and archived.  A big thanks to all who contributed over the years.**
+EIAData has been updated for v2 of the EIA API.  To pull an energy series you'll have to know the Series ID from the version 1 API.  If you don't know the Series IDs for the data you want, you can [Insert link to download data with series IDs].
 
 R Wrapper for the Energy Information Administration (EIA) API.  
 
