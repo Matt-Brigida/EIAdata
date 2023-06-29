@@ -1,4 +1,5 @@
 importFrom(jsonlite, fromJSON)
+importFrom(httr, content)
 importFrom(xts, xts)
 importFrom(zoo, as.yearqtr)
 importFrom(httr, GET)
