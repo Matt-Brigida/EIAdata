@@ -7,6 +7,11 @@
       substr(x, nchar(x)-1, nchar(x))
 }
 
+#' Download series data via the EIA API.
+#' 
+#' @param ID The Series Id.
+#' @param key Your API key.
+#' @returns Am xts series.
 getEIA <- function(ID, key){
 
      switch(.last2char(ID),
@@ -20,7 +25,11 @@ getEIA <- function(ID, key){
             print("ERROR: The last character of your ID is not one of the possible sampling frequencies (A, Q, M, W, D, or H)"))
  }
         
-## annual working
+#' Download annual series data via the EIA API.  Do not use this function directly.
+#' 
+#' @param ID The Series Id.
+#' @param key Your API key.
+#' @returns An xts series.
 .getAnnEIA <- function(ID, key){
 
   ID <- unlist(strsplit(ID, ";"))
@@ -46,7 +55,11 @@ getEIA <- function(ID, key){
   return(temp)
 }
 
-## need quarterly series ID to test
+#' Download quarterly series data via the EIA API.  Do not use this function directly.
+#' 
+#' @param ID The Series Id.
+#' @param key Your API key.
+#' @returns An xts series.
 .getQEIA <- function(ID, key){
 
   ID <- unlist(strsplit(ID, ";"))
@@ -74,7 +87,11 @@ getEIA <- function(ID, key){
   return(temp)
 }
 
-## need to verify monthly
+#' Download monthly series data via the EIA API.  Do not use this function directly.
+#' 
+#' @param ID The Series Id.
+#' @param key Your API key.
+#' @returns An xts series.
 .getMonEIA <- function(ID, key){
 
   ID <- unlist(strsplit(ID, ";"))
@@ -101,7 +118,11 @@ getEIA <- function(ID, key){
   return(temp)
 }
 
-## weekly working
+#' Download weekly series data via the EIA API.
+#' 
+#' @param ID The Series Id.
+#' @param key Your API key.
+#' @returns An xts series.
 .getWDEIA <- function(ID, key){
 
   ID <- unlist(strsplit(ID, ";"))
@@ -131,7 +152,11 @@ getEIA <- function(ID, key){
 }
 
 
-### Hourly UTC tz--------
+#' Download hourly UTC time zone series data via the EIA API.  Do not use this function directly.
+#' 
+#' @param ID The Series Id.
+#' @param key Your API key.
+#' @returns An xts series.
 .getHEIA_UTC <- function(ID, key){
 
   ID <- unlist(strsplit(ID, ";"))
@@ -169,7 +194,11 @@ getEIA <- function(ID, key){
 }
 
 
-### hourly local tz---------
+#' Download hourly local time zone series data via the EIA API.  Do not use this function directly.
+#' 
+#' @param ID The Series Id.
+#' @param key Your API key.
+#' @returns An xts series.
 .getHEIA_L <- function(ID, key){
 
   ID <- unlist(strsplit(ID, ";"))
