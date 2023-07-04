@@ -1,12 +1,12 @@
-Package: EIAdata
+Package: 'EIAdata'
 Type: Package
-Title: R Wrapper for the Energy Information Administration (EIA) API
+Title: R Wrapper for the Energy Information Administration ('EIA') API
 Version: 0.2.0
 Date: 2023-07-01
-Author: Matthew Brigida and others (see GitHub)
-Maintainer: Matthew Brigida <mdbrigida@gmail.com>
+Authors@R: c(person("Matthew Brigida", "Developer", role = c("aut", "cre","cph"),
+email = "mdbrigida@gmail.com"))
 URL: https://github.com/Matt-Brigida/EIAdata
 BugReports: https://github.com/Matt-Brigida/EIAdata/issues
-Description: An R wrapper to allow the user to query categories and Series IDs, and import data, from the EIA's API <https://www.eia.gov/opendata/>.
+Description: An R wrapper to allow the user to query categories and Series IDs, and import data, from the 'EIA\'s' API <https://www.eia.gov/opendata/>.
 Depends: R (>= 2.11.0), xts, zoo, httr, jsonlite
 License: GPL-2
