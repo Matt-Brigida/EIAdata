@@ -39,11 +39,11 @@ getEIA <- function(ID, key){
 
   doc <- httr::GET(url)
 
-  date <- fromJSON(content(doc, "text"))$response$data$period
-  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$value)
+  date <- fromJSON(content(doc, "text", encoding = "UTF-8"))$response$data$period
+  values <- as.numeric(fromJSON(content(doc, "text", encoding = "UTF-8"))$response$data$value)
   if(length(values) == 0)
   {
-  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$price)
+  values <- as.numeric(fromJSON(content(doc, "text", encoding = "UTF-8"))$response$data$price)
   }
 
   date <- as.Date(paste(as.character(date), "-12-31", sep=""), "%Y-%m-%d")
@@ -69,11 +69,11 @@ getEIA <- function(ID, key){
 
   doc <- httr::GET(url)
 
-  date <- fromJSON(content(doc, "text"))$response$data$period
-  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$value)
+  date <- fromJSON(content(doc, "text", encoding = "UTF-8"))$response$data$period
+  values <- as.numeric(fromJSON(content(doc, "text", encoding = "UTF-8"))$response$data$value)
   if(length(values) == 0)
   {
-  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$price)
+  values <- as.numeric(fromJSON(content(doc, "text", encoding = "UTF-8"))$response$data$price)
   }
   
   date <- gsub("-", "", date)
@@ -101,11 +101,11 @@ getEIA <- function(ID, key){
 
   doc <- httr::GET(url)
 
-  date <- fromJSON(content(doc, "text"))$response$data$period
-  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$value)
+  date <- fromJSON(content(doc, "text", encoding = "UTF-8"))$response$data$period
+  values <- as.numeric(fromJSON(content(doc, "text", encoding = "UTF-8"))$response$data$value)
   if(length(values) == 0)
   {
-  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$price)
+  values <- as.numeric(fromJSON(content(doc, "text", encoding = "UTF-8"))$response$data$price)
   }
 
   date <- as.Date(paste(as.character(date), "01", sep="-"), "%Y-%m-%d")
@@ -132,11 +132,11 @@ getEIA <- function(ID, key){
 
   doc <- httr::GET(url)
 
-  date <- fromJSON(content(doc, "text"))$response$data$period
-  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$value)
+  date <- fromJSON(content(doc, "text", encoding = "UTF-8"))$response$data$period
+  values <- as.numeric(fromJSON(content(doc, "text", encoding = "UTF-8"))$response$data$value)
   if(length(values) == 0)
   {
-  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$price)
+  values <- as.numeric(fromJSON(content(doc, "text", encoding = "UTF-8"))$response$data$price)
   }
 
   date <- as.Date(date, "%Y- %m-%d")
@@ -166,11 +166,11 @@ getEIA <- function(ID, key){
 
   doc <- httr::GET(url)
 
-  date <- fromJSON(content(doc, "text"))$response$data$period
-  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$value)  
+  date <- fromJSON(content(doc, "text", encoding = "UTF-8"))$response$data$period
+  values <- as.numeric(fromJSON(content(doc, "text", encoding = "UTF-8"))$response$data$value)  
   if(length(values) == 0)
   {
-  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$price)
+  values <- as.numeric(fromJSON(content(doc, "text", encoding = "UTF-8"))$response$data$price)
   }
  
  ## looks like if the date ends in z it is UTC and otherwise in local time-------
@@ -208,11 +208,11 @@ getEIA <- function(ID, key){
 
   doc <- httr::GET(url)
 
-  date <- fromJSON(content(doc, "text"))$response$data$period
-  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$value)  
+  date <- fromJSON(content(doc, "text", encoding = "UTF-8"))$response$data$period
+  values <- as.numeric(fromJSON(content(doc, "text", encoding = "UTF-8"))$response$data$value)  
   if(length(values) == 0)
   {
-  values <- as.numeric(fromJSON(content(doc, "text"))$response$data$price)
+  values <- as.numeric(fromJSON(content(doc, "text", encoding = "UTF-8"))$response$data$price)
   }
 
  ## looks like if the date ends in z it is UTC and otherwise in local time-------
